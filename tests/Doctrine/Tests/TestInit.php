@@ -7,15 +7,23 @@ namespace Doctrine\Tests;
 error_reporting(E_ALL | E_STRICT);
 
 require_once 'PHPUnit/TextUI/TestRunner.php';
-require_once __DIR__ . '/../../../lib/Doctrine/Common/ClassLoader.php';
 
-$classLoader = new \Doctrine\Common\ClassLoader('Doctrine');
-$classLoader->register();
+// register silently failing autoloader
+spl_autoload_register(function($class)
+{
+    if (0 === strpos($class, 'Doctrine\Tests\\')) {
+        $path = __DIR__.'/../../'.strtr($class, '\\', '/').'.php';
+        if (file_exists($path) && is_readable($path)) {
+            require_once $path;
 
-set_include_path(
-    __DIR__ . '/../../../lib'
-    . PATH_SEPARATOR .
-    __DIR__ . '/../..'
-    . PATH_SEPARATOR .
-    get_include_path()
-);
+            return true;
+        }
+    } else if (0 === strpos($class, 'Doctrine\Common\\')) {
+        $path = __DIR__.'/../../../lib/'.($class = strtr($class, '\\', '/')).'.php';
+        if (file_exists($path) && is_readable($path)) {
+            require_once $path;
+
+            return true;
+        }
+    }
+});
