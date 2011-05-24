@@ -6,8 +6,6 @@ namespace Doctrine\Tests;
 
 error_reporting(E_ALL | E_STRICT);
 
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
 // register silently failing autoloader
 spl_autoload_register(function($class)
 {
