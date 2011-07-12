@@ -21,8 +21,6 @@
 
 namespace Doctrine\Common;
 
-use Doctrine\Common\Events\Event;
-
 /**
  * The EventManager is the central point of Doctrine's event listener system.
  * Listeners are registered on the manager and events are dispatched through the
