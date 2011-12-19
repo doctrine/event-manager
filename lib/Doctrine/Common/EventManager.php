@@ -25,7 +25,7 @@ namespace Doctrine\Common;
  * The EventManager is the central point of Doctrine's event listener system.
  * Listeners are registered on the manager and events are dispatched through the
  * manager.
- * 
+ *
  * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
@@ -38,7 +38,7 @@ class EventManager
 {
     /**
      * Map of registered listeners.
-     * <event> => <listeners> 
+     * <event> => <listeners>
      *
      * @var array
      */
@@ -57,7 +57,7 @@ class EventManager
     {
         if (isset($this->_listeners[$eventName])) {
             $eventArgs = $eventArgs === null ? EventArgs::getEmptyInstance() : $eventArgs;
-            
+
             foreach ($this->_listeners[$eventName] as $listener) {
                 $listener->$eventName($eventArgs);
             }
@@ -96,14 +96,14 @@ class EventManager
     {
         // Picks the hash code related to that listener
         $hash = spl_object_hash($listener);
-        
+
         foreach ((array) $events as $event) {
             // Overrides listener if a previous one was associated already
             // Prevents duplicate listeners on same event (same instance only)
             $this->_listeners[$event][$hash] = $listener;
         }
     }
-    
+
     /**
      * Removes an event listener from the specified events.
      *
@@ -114,7 +114,7 @@ class EventManager
     {
         // Picks the hash code related to that listener
         $hash = spl_object_hash($listener);
-        
+
         foreach ((array) $events as $event) {
             // Check if actually have this listener associated
             if (isset($this->_listeners[$event][$hash])) {
@@ -122,11 +122,11 @@ class EventManager
             }
         }
     }
-    
+
     /**
      * Adds an EventSubscriber. The subscriber is asked for all the events he is
      * interested in and added as a listener for these events.
-     * 
+     *
      * @param Doctrine\Common\EventSubscriber $subscriber The subscriber.
      */
     public function addEventSubscriber(EventSubscriber $subscriber)
