@@ -40,7 +40,6 @@ class EventArgs
 {
     /**
      * @var EventArgs Single instance of EventArgs
-     * @static
      */
     private static $_emptyEventArgsInstance;
 
@@ -55,7 +54,6 @@ class EventArgs
      *
      * @see EventManager::dispatchEvent
      * @link http://msdn.microsoft.com/en-us/library/system.eventargs.aspx
-     * @static
      * @return EventArgs
      */
     public static function getEmptyInstance()
