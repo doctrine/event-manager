@@ -133,7 +133,7 @@ class EventManager
     {
         $this->addEventListener($subscriber->getSubscribedEvents(), $subscriber);
     }
-	
+
     /**
      * Removes an EventSubscriber. The subscriber is asked for all the events it is
      * interested in and removed as a listener for these events.
@@ -143,5 +143,5 @@ class EventManager
     public function removeEventSubscriber(EventSubscriber $subscriber)
     {
         $this->removeEventListener($subscriber->getSubscribedEvents(), $subscriber);
-    } 	
+    }
 }
