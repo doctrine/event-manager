@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -28,18 +26,18 @@ namespace Doctrine\Common;
  * information to an event handler when an event is raised. The single empty EventArgs
  * instance can be obtained through {@link getEmptyInstance}.
  *
- * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link    www.doctrine-project.org
- * @since   2.0
- * @version $Revision: 3938 $
- * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author  Jonathan Wage <jonwage@gmail.com>
- * @author  Roman Borschel <roman@code-factory.org>
+ * @link   www.doctrine-project.org
+ * @since  2.0
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
  */
 class EventArgs
 {
     /**
-     * @var EventArgs Single instance of EventArgs
+     * Single instance of EventArgs.
+     *
+     * @var EventArgs
      */
     private static $_emptyEventArgsInstance;
 
@@ -50,10 +48,12 @@ class EventArgs
      * like this: EventManager::dispatchEvent('eventname');
      *
      * The benefit from this is that only one empty instance is instantiated and shared
-     * (otherwise there would be instances for every dispatched in the abovementioned form)
+     * (otherwise there would be instances for every dispatched in the abovementioned form).
      *
      * @see EventManager::dispatchEvent
+     *
      * @link http://msdn.microsoft.com/en-us/library/system.eventargs.aspx
+     *
      * @return EventArgs
      */
     public static function getEmptyInstance()
