@@ -27,14 +27,14 @@ class EventManagerTest extends \Doctrine\Tests\DoctrineTestCase
 
     public function testInitialState()
     {
-        $this->assertEquals(array(), $this->_eventManager->getListeners());
+        $this->assertEquals([], $this->_eventManager->getListeners());
         $this->assertFalse($this->_eventManager->hasListeners(self::preFoo));
         $this->assertFalse($this->_eventManager->hasListeners(self::postFoo));
     }
 
     public function testAddEventListener()
     {
-        $this->_eventManager->addEventListener(array('preFoo', 'postFoo'), $this);
+        $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         $this->assertTrue($this->_eventManager->hasListeners(self::preFoo));
         $this->assertTrue($this->_eventManager->hasListeners(self::postFoo));
         $this->assertEquals(1, count($this->_eventManager->getListeners(self::preFoo)));
@@ -44,7 +44,7 @@ class EventManagerTest extends \Doctrine\Tests\DoctrineTestCase
 
     public function testDispatchEvent()
     {
-        $this->_eventManager->addEventListener(array('preFoo', 'postFoo'), $this);
+        $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         $this->_eventManager->dispatchEvent(self::preFoo);
         $this->assertTrue($this->_preFooInvoked);
         $this->assertFalse($this->_postFooInvoked);
@@ -52,9 +52,9 @@ class EventManagerTest extends \Doctrine\Tests\DoctrineTestCase
 
     public function testRemoveEventListener()
     {
-        $this->_eventManager->addEventListener(array('preBar'), $this);
+        $this->_eventManager->addEventListener(['preBar'], $this);
         $this->assertTrue($this->_eventManager->hasListeners(self::preBar));
-        $this->_eventManager->removeEventListener(array('preBar'), $this);
+        $this->_eventManager->removeEventListener(['preBar'], $this);
         $this->assertFalse($this->_eventManager->hasListeners(self::preBar));
     }
 
@@ -83,6 +83,6 @@ class TestEventSubscriber implements \Doctrine\Common\EventSubscriber
 {
     public function getSubscribedEvents()
     {
-        return array('preFoo', 'postFoo');
+        return ['preFoo', 'postFoo'];
     }
 }
