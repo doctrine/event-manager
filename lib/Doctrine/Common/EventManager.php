@@ -119,10 +119,7 @@ class EventManager
         $hash = spl_object_hash($listener);
 
         foreach ((array) $events as $event) {
-            // Check if actually have this listener associated
-            if (isset($this->_listeners[$event][$hash])) {
-                unset($this->_listeners[$event][$hash]);
-            }
+            unset($this->_listeners[$event][$hash]);
         }
     }
 
