@@ -8,20 +8,20 @@ use Doctrine\Common\EventArgs;
 class EventManagerTest extends \Doctrine\Tests\DoctrineTestCase
 {
     /* Some pseudo events */
-    const preFoo = 'preFoo';
+    const preFoo  = 'preFoo';
     const postFoo = 'postFoo';
-    const preBar = 'preBar';
+    const preBar  = 'preBar';
     const postBar = 'postBar';
 
-    private $_preFooInvoked = false;
+    private $_preFooInvoked  = false;
     private $_postFooInvoked = false;
 
     private $_eventManager;
 
     protected function setUp()
     {
-        $this->_eventManager = new EventManager;
-        $this->_preFooInvoked = false;
+        $this->_eventManager   = new EventManager;
+        $this->_preFooInvoked  = false;
         $this->_postFooInvoked = false;
     }
 
