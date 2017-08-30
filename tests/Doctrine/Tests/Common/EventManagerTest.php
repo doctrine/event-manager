@@ -27,43 +27,43 @@ class EventManagerTest extends \Doctrine\Tests\DoctrineTestCase
 
     public function testInitialState()
     {
-        $this->assertEquals([], $this->_eventManager->getListeners());
-        $this->assertFalse($this->_eventManager->hasListeners(self::preFoo));
-        $this->assertFalse($this->_eventManager->hasListeners(self::postFoo));
+        self::assertEquals([], $this->_eventManager->getListeners());
+        self::assertFalse($this->_eventManager->hasListeners(self::preFoo));
+        self::assertFalse($this->_eventManager->hasListeners(self::postFoo));
     }
 
     public function testAddEventListener()
     {
         $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
-        $this->assertTrue($this->_eventManager->hasListeners(self::preFoo));
-        $this->assertTrue($this->_eventManager->hasListeners(self::postFoo));
-        $this->assertEquals(1, count($this->_eventManager->getListeners(self::preFoo)));
-        $this->assertEquals(1, count($this->_eventManager->getListeners(self::postFoo)));
-        $this->assertEquals(2, count($this->_eventManager->getListeners()));
+        self::assertTrue($this->_eventManager->hasListeners(self::preFoo));
+        self::assertTrue($this->_eventManager->hasListeners(self::postFoo));
+        self::assertEquals(1, count($this->_eventManager->getListeners(self::preFoo)));
+        self::assertEquals(1, count($this->_eventManager->getListeners(self::postFoo)));
+        self::assertEquals(2, count($this->_eventManager->getListeners()));
     }
 
     public function testDispatchEvent()
     {
         $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         $this->_eventManager->dispatchEvent(self::preFoo);
-        $this->assertTrue($this->_preFooInvoked);
-        $this->assertFalse($this->_postFooInvoked);
+        self::assertTrue($this->_preFooInvoked);
+        self::assertFalse($this->_postFooInvoked);
     }
 
     public function testRemoveEventListener()
     {
         $this->_eventManager->addEventListener(['preBar'], $this);
-        $this->assertTrue($this->_eventManager->hasListeners(self::preBar));
+        self::assertTrue($this->_eventManager->hasListeners(self::preBar));
         $this->_eventManager->removeEventListener(['preBar'], $this);
-        $this->assertFalse($this->_eventManager->hasListeners(self::preBar));
+        self::assertFalse($this->_eventManager->hasListeners(self::preBar));
     }
 
     public function testAddEventSubscriber()
     {
         $eventSubscriber = new TestEventSubscriber();
         $this->_eventManager->addEventSubscriber($eventSubscriber);
-        $this->assertTrue($this->_eventManager->hasListeners(self::preFoo));
-        $this->assertTrue($this->_eventManager->hasListeners(self::postFoo));
+        self::assertTrue($this->_eventManager->hasListeners(self::preFoo));
+        self::assertTrue($this->_eventManager->hasListeners(self::postFoo));
     }
 
     /* Listener methods */
