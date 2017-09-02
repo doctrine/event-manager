@@ -82,7 +82,7 @@ class EventManager
      */
     public function hasListeners($event)
     {
-        return !empty($this->_listeners[$event]);
+        return ! empty($this->_listeners[$event]);
     }
 
     /**
