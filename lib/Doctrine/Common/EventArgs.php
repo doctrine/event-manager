@@ -34,7 +34,7 @@ class EventArgs
      *
      * @see EventManager::dispatchEvent
      *
-     * @link http://msdn.microsoft.com/en-us/library/system.eventargs.aspx
+     * @link https://msdn.microsoft.com/en-us/library/system.eventargs.aspx
      *
      * @return EventArgs
      */
