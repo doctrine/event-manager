@@ -1,0 +1,45 @@
+dist: trusty
+sudo: false
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 7.1
+  - 7.2
+  - nightly
+
+before_install:
+  - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
+
+install:
+  - travis_retry composer -n --prefer-source install
+
+script: ./vendor/bin/phpunit
+
+jobs:
+  allow_failures:
+    - php: nightly
+
+  include:
+    - stage: Coverage
+      before_script:
+        - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{.disabled,}
+        - if [[ ! $(php -m | grep -si xdebug) ]]; then echo "xdebug required for coverage"; exit 1; fi
+      script:
+        - ./vendor/bin/phpunit --coverage-clover clover.xml
+      after_script:
+        - wget https://scrutinizer-ci.com/ocular.phar
+        - php ocular.phar code-coverage:upload --format=php-clover clover.xml
+
+    - stage: Coding standard
+      script:
+        - ./vendor/bin/phpcs
+
+    - stage: Lint
+      before_script:
+        - travis_retry composer require --dev --prefer-dist --prefer-stable phpstan/phpstan:^0.8
+      script: vendor/bin/phpstan analyse -l 3 lib tests
+
