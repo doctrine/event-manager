@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Doctrine\Common;
 
 /**
@@ -7,12 +10,6 @@ namespace Doctrine\Common;
  * This class contains no event data. It is used by events that do not pass state
  * information to an event handler when an event is raised. The single empty EventArgs
  * instance can be obtained through {@link getEmptyInstance}.
- *
- * @link   www.doctrine-project.org
- * @since  2.0
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author Jonathan Wage <jonwage@gmail.com>
- * @author Roman Borschel <roman@code-factory.org>
  */
 class EventArgs
 {
@@ -40,8 +37,8 @@ class EventArgs
      */
     public static function getEmptyInstance()
     {
-        if ( ! self::$_emptyEventArgsInstance) {
-            self::$_emptyEventArgsInstance = new EventArgs;
+        if (! self::$_emptyEventArgsInstance) {
+            self::$_emptyEventArgsInstance = new EventArgs();
         }
 
         return self::$_emptyEventArgsInstance;

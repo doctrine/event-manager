@@ -1,16 +1,12 @@
 <?php
 namespace Doctrine\Common;
 
+use function spl_object_hash;
+
 /**
  * The EventManager is the central point of Doctrine's event listener system.
  * Listeners are registered on the manager and events are dispatched through the
  * manager.
- *
- * @link   www.doctrine-project.org
- * @since  2.0
- * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author Jonathan Wage <jonwage@gmail.com>
- * @author Roman Borschel <roman@code-factory.org>
  */
 class EventManager
 {
@@ -18,28 +14,30 @@ class EventManager
      * Map of registered listeners.
      * <event> => <listeners>
      *
-     * @var array
+     * @var object[][]
      */
     private $_listeners = [];
 
     /**
      * Dispatches an event to all registered listeners.
      *
-     * @param string    $eventName      The name of the event to dispatch. The name of the event is
+     * @param string         $eventName The name of the event to dispatch. The name of the event is
      *                                  the name of the method that is invoked on listeners.
      * @param EventArgs|null $eventArgs The event arguments to pass to the event handlers/listeners.
      *                                  If not supplied, the single empty EventArgs instance is used.
      *
      * @return void
      */
-    public function dispatchEvent($eventName, EventArgs $eventArgs = null)
+    public function dispatchEvent($eventName, ?EventArgs $eventArgs = null)
     {
-        if (isset($this->_listeners[$eventName])) {
-            $eventArgs = $eventArgs === null ? EventArgs::getEmptyInstance() : $eventArgs;
+        if (! isset($this->_listeners[$eventName])) {
+            return;
+        }
 
-            foreach ($this->_listeners[$eventName] as $listener) {
-                $listener->$eventName($eventArgs);
-            }
+        $eventArgs = $eventArgs ?? EventArgs::getEmptyInstance();
+
+        foreach ($this->_listeners[$eventName] as $listener) {
+            $listener->$eventName($eventArgs);
         }
     }
 
@@ -48,7 +46,7 @@ class EventManager
      *
      * @param string|null $event The name of the event.
      *
-     * @return array The event listeners for the specified event, or all event listeners.
+     * @return object[]|object[][] The event listeners for the specified event, or all event listeners.
      */
     public function getListeners($event = null)
     {
@@ -60,7 +58,7 @@ class EventManager
      *
      * @param string $event
      *
-     * @return boolean TRUE if the specified event has any listeners, FALSE otherwise.
+     * @return bool TRUE if the specified event has any listeners, FALSE otherwise.
      */
     public function hasListeners($event)
     {
@@ -70,8 +68,8 @@ class EventManager
     /**
      * Adds an event listener that listens on the specified events.
      *
-     * @param string|array $events   The event(s) to listen on.
-     * @param object       $listener The listener object.
+     * @param string|string[] $events   The event(s) to listen on.
+     * @param object          $listener The listener object.
      *
      * @return void
      */
@@ -90,8 +88,8 @@ class EventManager
     /**
      * Removes an event listener from the specified events.
      *
-     * @param string|array $events
-     * @param object       $listener
+     * @param string|string[] $events
+     * @param object          $listener
      *
      * @return void
      */
@@ -109,7 +107,7 @@ class EventManager
      * Adds an EventSubscriber. The subscriber is asked for all the events it is
      * interested in and added as a listener for these events.
      *
-     * @param \Doctrine\Common\EventSubscriber $subscriber The subscriber.
+     * @param EventSubscriber $subscriber The subscriber.
      *
      * @return void
      */
@@ -122,7 +120,7 @@ class EventManager
      * Removes an EventSubscriber. The subscriber is asked for all the events it is
      * interested in and removed as a listener for these events.
      *
-     * @param \Doctrine\Common\EventSubscriber $subscriber The subscriber.
+     * @param EventSubscriber $subscriber The subscriber.
      *
      * @return void
      */

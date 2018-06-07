@@ -15,7 +15,8 @@ before_install:
   - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
 
 install:
-  - travis_retry composer -n --prefer-source install
+  - rm composer.lock
+  - travis_retry composer update -n --prefer-dist
 
 script: ./vendor/bin/phpunit
 
@@ -35,6 +36,8 @@ jobs:
         - php ocular.phar code-coverage:upload --format=php-clover clover.xml
 
     - stage: Coding standard
+      install:
+        - travis_retry composer install -n --prefer-dist
       script:
         - ./vendor/bin/phpcs
 
