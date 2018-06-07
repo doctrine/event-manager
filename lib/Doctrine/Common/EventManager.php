@@ -34,7 +34,7 @@ class EventManager
             return;
         }
 
-        $eventArgs = $eventArgs === null ? EventArgs::getEmptyInstance() : $eventArgs;
+        $eventArgs = $eventArgs ?? EventArgs::getEmptyInstance();
 
         foreach ($this->_listeners[$eventName] as $listener) {
             $listener->$eventName($eventArgs);

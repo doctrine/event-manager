@@ -6,6 +6,7 @@ use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Tests\DoctrineTestCase;
+use ReflectionProperty;
 use function count;
 
 class EventManagerTest extends DoctrineTestCase
@@ -70,6 +71,26 @@ class EventManagerTest extends DoctrineTestCase
         $this->_eventManager->addEventSubscriber($eventSubscriber);
         self::assertTrue($this->_eventManager->hasListeners(self::PRE_FOO));
         self::assertTrue($this->_eventManager->hasListeners(self::POST_FOO));
+    }
+
+    public function testRemoveEventSubscriber() : void
+    {
+        $eventSubscriber = new TestEventSubscriber();
+        $this->_eventManager->addEventSubscriber($eventSubscriber);
+        $this->_eventManager->removeEventSubscriber($eventSubscriber);
+        self::assertFalse($this->_eventManager->hasListeners(self::PRE_FOO));
+        self::assertFalse($this->_eventManager->hasListeners(self::POST_FOO));
+    }
+
+    public function testNoDispatchingForUnregisteredEvent() : void
+    {
+        $reflection = new ReflectionProperty(EventArgs::class, '_emptyEventArgsInstance');
+        $reflection->setAccessible(true);
+        $reflection->setValue(null, null);
+
+        $this->_eventManager->dispatchEvent('unknown');
+
+        $this->assertNull($reflection->getValue(null));
     }
 
     /* Listener methods */
