@@ -27,7 +27,7 @@ The event system is controlled by the ``Doctrine\Common\EventManager`` class.
 Listeners
 =========
 
-Now you are ready to listen for events. Here is an exmaple of a custom event listener named ``TestEvent``.
+Now you are ready to listen for events. Here is an example of a custom event listener named ``TestEvent``.
 
 .. code-block:: php
 
