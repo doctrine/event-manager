@@ -90,7 +90,7 @@ class EventManagerTest extends DoctrineTestCase
 
         $this->_eventManager->dispatchEvent('unknown');
 
-        $this->assertNull($reflection->getValue(null));
+        self::assertNull($reflection->getValue(null));
     }
 
     /* Listener methods */
