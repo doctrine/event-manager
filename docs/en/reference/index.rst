@@ -89,7 +89,7 @@ You can easily remove a listener with the ``removeEventListener()`` method.
 Event Subscribers
 =================
 
-The Doctrine event system also has a simple concept of event subscribers. We can define a simple ``TestEventSubscriber`` class which implements the ``Doctrine\Common\EventSubscriber`` interface and implements a ``getSubscribedEvents()`` method which returns an array of events it should be subscribed to.
+The Doctrine event system also has a simple concept of event subscribers. We can define a simple ``TestEventSubscriber`` class which implements the ``Doctrine\Common\EventSubscriber`` interface with a ``getSubscribedEvents()`` method which returns an array of events it should be subscribed to.
 
 .. code-block:: php
 
