@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Doctrine Event Manager component",
     "keywords": ["eventmanager", "eventdispatcher", "event"],
-    "homepage": "https://doctrine-project.org/projects/event-manager.html",
+    "homepage": "https://www.doctrine-project.org/projects/event-manager.html",
     "license": "MIT",
     "authors": [
         {"name": "Guilherme Blanco", "email": "guilhermeblanco@gmail.com"},
