@@ -17,11 +17,14 @@
         "php": "^7.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0",
-        "doctrine/coding-standard": "^4.0"
+        "doctrine/coding-standard": "^4.0",
+        "phpunit/phpunit": "^7.0"
     },
     "conflict": {
         "doctrine/common": "<2.9@dev"
+    },
+    "config": {
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
