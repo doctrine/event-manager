@@ -1,8 +1,14 @@
 {
     "name": "doctrine/event-manager",
     "type": "library",
-    "description": "Doctrine Event Manager component",
-    "keywords": ["eventmanager", "eventdispatcher", "event"],
+    "description": "The Doctrine Event Manager is a simple PHP event system that was built to be used with the various Doctrine projects.",
+    "keywords": [
+        "events",
+        "event",
+        "event dispatcher",
+        "event manager",
+        "event system"
+    ],
     "homepage": "https://www.doctrine-project.org/projects/event-manager.html",
     "license": "MIT",
     "authors": [
