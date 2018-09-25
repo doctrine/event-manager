@@ -16,7 +16,7 @@ use function strtr;
 error_reporting(E_ALL | E_STRICT);
 
 // register silently failing autoloader
-spl_autoload_register(function ($class) {
+spl_autoload_register(static function ($class) {
     if (strpos($class, 'Doctrine\Tests\\') !== 0) {
         return;
     }

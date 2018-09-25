@@ -1,4 +1,5 @@
 <?php
+
 namespace Doctrine\Common;
 
 use function spl_object_hash;
