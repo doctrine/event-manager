@@ -1,5 +1,5 @@
-dist: trusty
-sudo: false
+dist: xenial
+
 language: php
 
 cache:
@@ -10,7 +10,7 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 before_install:
   - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
@@ -22,9 +22,6 @@ install:
 script: ./vendor/bin/phpunit
 
 jobs:
-  allow_failures:
-    - php: 7.4snapshot
-
   include:
     - stage: Coverage
       before_script:
