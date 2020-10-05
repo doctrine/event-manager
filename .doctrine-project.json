@@ -5,14 +5,21 @@
     "docsSlug": "doctrine-event-manager",
     "versions": [
         {
-            "name": "1.0",
-            "branchName": "master",
+            "name": "1.1",
+            "branchName": "1.1.x",
             "slug": "latest",
             "current": true,
             "aliases": [
                 "current",
                 "stable"
             ]
+        },
+        {
+            "name": "1.0",
+            "branchName": "1.0",
+            "slug": "1.0",
+            "current": false,
+            "maintained": false
         }
     ]
 }
