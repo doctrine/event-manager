@@ -1,6 +1,6 @@
 # Doctrine Event Manager
 
-[![Build Status](https://travis-ci.org/doctrine/event-manager.svg)](https://travis-ci.org/doctrine/event-manager)
+[![Build Status](https://github.com/doctrine/event-manager/workflows/Continuous%20Integration/badge.svg)](https://github.com/doctrine/event-manager/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/doctrine/event-manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/doctrine/event-manager/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/doctrine/event-manager/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/doctrine/event-manager/?branch=master)
 
