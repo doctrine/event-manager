@@ -32,7 +32,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: "Install PHP with PCOV"
+      - name: "Install PHP with Xdebug"
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-version }}"
