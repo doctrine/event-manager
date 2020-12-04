@@ -7,6 +7,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Tests\DoctrineTestCase;
 use ReflectionProperty;
+
 use function count;
 
 class EventManagerTest extends DoctrineTestCase
@@ -25,21 +26,21 @@ class EventManagerTest extends DoctrineTestCase
     /** @var EventManager */
     private $_eventManager;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->_eventManager   = new EventManager();
         $this->_preFooInvoked  = false;
         $this->_postFooInvoked = false;
     }
 
-    public function testInitialState() : void
+    public function testInitialState(): void
     {
         self::assertEquals([], $this->_eventManager->getListeners());
         self::assertFalse($this->_eventManager->hasListeners(self::PRE_FOO));
         self::assertFalse($this->_eventManager->hasListeners(self::POST_FOO));
     }
 
-    public function testAddEventListener() : void
+    public function testAddEventListener(): void
     {
         $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         self::assertTrue($this->_eventManager->hasListeners(self::PRE_FOO));
@@ -49,7 +50,7 @@ class EventManagerTest extends DoctrineTestCase
         self::assertEquals(2, count($this->_eventManager->getListeners()));
     }
 
-    public function testDispatchEvent() : void
+    public function testDispatchEvent(): void
     {
         $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         $this->_eventManager->dispatchEvent(self::PRE_FOO);
@@ -57,7 +58,7 @@ class EventManagerTest extends DoctrineTestCase
         self::assertFalse($this->_postFooInvoked);
     }
 
-    public function testRemoveEventListener() : void
+    public function testRemoveEventListener(): void
     {
         $this->_eventManager->addEventListener(['preBar'], $this);
         self::assertTrue($this->_eventManager->hasListeners(self::PRE_BAR));
@@ -65,7 +66,7 @@ class EventManagerTest extends DoctrineTestCase
         self::assertFalse($this->_eventManager->hasListeners(self::PRE_BAR));
     }
 
-    public function testAddEventSubscriber() : void
+    public function testAddEventSubscriber(): void
     {
         $eventSubscriber = new TestEventSubscriber();
         $this->_eventManager->addEventSubscriber($eventSubscriber);
@@ -73,7 +74,7 @@ class EventManagerTest extends DoctrineTestCase
         self::assertTrue($this->_eventManager->hasListeners(self::POST_FOO));
     }
 
-    public function testRemoveEventSubscriber() : void
+    public function testRemoveEventSubscriber(): void
     {
         $eventSubscriber = new TestEventSubscriber();
         $this->_eventManager->addEventSubscriber($eventSubscriber);
@@ -82,7 +83,7 @@ class EventManagerTest extends DoctrineTestCase
         self::assertFalse($this->_eventManager->hasListeners(self::POST_FOO));
     }
 
-    public function testNoDispatchingForUnregisteredEvent() : void
+    public function testNoDispatchingForUnregisteredEvent(): void
     {
         $reflection = new ReflectionProperty(EventArgs::class, '_emptyEventArgsInstance');
         $reflection->setAccessible(true);
@@ -95,12 +96,12 @@ class EventManagerTest extends DoctrineTestCase
 
     /* Listener methods */
 
-    public function preFoo(EventArgs $e) : void
+    public function preFoo(EventArgs $e): void
     {
         $this->_preFooInvoked = true;
     }
 
-    public function postFoo(EventArgs $e) : void
+    public function postFoo(EventArgs $e): void
     {
         $this->_postFooInvoked = true;
     }
@@ -111,7 +112,7 @@ class TestEventSubscriber implements EventSubscriber
     /**
      * @return string[]
      */
-    public function getSubscribedEvents() : array
+    public function getSubscribedEvents(): array
     {
         return ['preFoo', 'postFoo'];
     }

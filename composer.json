@@ -23,9 +23,9 @@
         "php": "^7.1 || ^8.0"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^6.0",
+        "doctrine/coding-standard": "^8.0",
         "phpstan/phpstan": "^0.12.58",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
     },
     "conflict": {
         "doctrine/common": "<2.9@dev"
