@@ -2,16 +2,18 @@
 /*
  * This file bootstraps the test environment.
  */
+
 namespace Doctrine\Tests;
 
-use const E_ALL;
-use const E_STRICT;
 use function error_reporting;
 use function is_file;
 use function is_readable;
 use function spl_autoload_register;
 use function strpos;
 use function strtr;
+
+use const E_ALL;
+use const E_STRICT;
 
 error_reporting(E_ALL | E_STRICT);
 
