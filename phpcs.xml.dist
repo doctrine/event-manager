@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<ruleset>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <arg name="basepath" value="."/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="80"/>
@@ -17,6 +18,20 @@
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
         <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException"/>
+
+        <!-- Adding type hints breaks backward compatibility -->
+        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
+
+        <!-- The null coalesce equal operator is only available in PHP 7.4+ -->
+        <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
+    </rule>
+
+    <!-- Property type hints are only available in PHP 7.4+ -->
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+        <properties>
+            <property name="enableNativeTypeHint" value="false"/>
+        </properties>
     </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
