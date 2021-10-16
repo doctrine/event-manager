@@ -25,7 +25,8 @@
     "require-dev": {
         "doctrine/coding-standard": "^8.0",
         "phpstan/phpstan": "^0.12.58",
-        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
+        "vimeo/psalm": "^4.10"
     },
     "conflict": {
         "doctrine/common": "<2.9@dev"
