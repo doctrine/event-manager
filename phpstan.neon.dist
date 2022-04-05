@@ -1,5 +1,5 @@
 parameters:
-  level: 3
+  level: 9
   paths:
     - lib/
     - tests/
