@@ -4,7 +4,7 @@
          colors="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
-         bootstrap="./tests/Doctrine/Tests/TestInit.php"
+         bootstrap="./vendor/autoload.php"
 >
     <testsuites>
         <testsuite name="Doctrine Event Manager Test Suite">

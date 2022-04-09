@@ -23,15 +23,18 @@
         "php": "^7.1 || ^8.0"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^8.0",
-        "phpstan/phpstan": "^0.12.58",
-        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
-        "vimeo/psalm": "^4.10"
+        "doctrine/coding-standard": "^9",
+        "phpstan/phpstan": "~1.4.10 || ^1.5.4",
+        "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+        "vimeo/psalm": "^4.22"
     },
     "conflict": {
-        "doctrine/common": "<2.9@dev"
+        "doctrine/common": "<2.9"
     },
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
         "sort-packages": true
     },
     "autoload": {
