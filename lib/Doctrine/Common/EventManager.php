@@ -48,6 +48,7 @@ class EventManager
      * @param string|null $event The name of the event.
      *
      * @return object[]|object[][] The event listeners for the specified event, or all event listeners.
+     * @psalm-return ($event is null ? object[][] : object[])
      */
     public function getListeners($event = null)
     {
