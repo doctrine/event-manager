@@ -5,13 +5,16 @@ namespace Doctrine\Tests\Common;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
-use function count;
+use function array_keys;
 
 class EventManagerTest extends TestCase
 {
+    use VerifyDeprecations;
+
     /* Some pseudo events */
     private const PRE_FOO  = 'preFoo';
     private const POST_FOO = 'postFoo';
@@ -35,7 +38,7 @@ class EventManagerTest extends TestCase
 
     public function testInitialState(): void
     {
-        self::assertEquals([], $this->_eventManager->getListeners());
+        self::assertEquals([], $this->_eventManager->getAllListeners());
         self::assertFalse($this->_eventManager->hasListeners(self::PRE_FOO));
         self::assertFalse($this->_eventManager->hasListeners(self::POST_FOO));
     }
@@ -45,9 +48,18 @@ class EventManagerTest extends TestCase
         $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         self::assertTrue($this->_eventManager->hasListeners(self::PRE_FOO));
         self::assertTrue($this->_eventManager->hasListeners(self::POST_FOO));
-        self::assertEquals(1, count($this->_eventManager->getListeners(self::PRE_FOO)));
-        self::assertEquals(1, count($this->_eventManager->getListeners(self::POST_FOO)));
-        self::assertEquals(2, count($this->_eventManager->getListeners()));
+        self::assertCount(1, $this->_eventManager->getListeners(self::PRE_FOO));
+        self::assertCount(1, $this->_eventManager->getListeners(self::POST_FOO));
+        self::assertCount(2, $this->_eventManager->getAllListeners());
+        self::assertSame(['preFoo', 'postFoo'], array_keys($this->_eventManager->getAllListeners()));
+    }
+
+    public function testGetListenersDeprecation(): void
+    {
+        $this->_eventManager->addEventListener(['preFoo', 'postFoo'], $this);
+
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/event-manager/pull/50');
+        self::assertCount(2, $this->_eventManager->getListeners());
     }
 
     public function testDispatchEvent(): void
