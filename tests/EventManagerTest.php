@@ -5,12 +5,12 @@ namespace Doctrine\Tests\Common;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Tests\DoctrineTestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
 use function count;
 
-class EventManagerTest extends DoctrineTestCase
+class EventManagerTest extends TestCase
 {
     /* Some pseudo events */
     private const PRE_FOO  = 'preFoo';

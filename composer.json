@@ -39,12 +39,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Doctrine\\Common\\": "lib/Doctrine/Common"
+            "Doctrine\\Common\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Doctrine\\Tests\\": "tests/Doctrine/Tests"
+            "Doctrine\\Tests\\Common\\": "tests"
         }
     }
 }
