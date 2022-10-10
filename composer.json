@@ -20,7 +20,8 @@
         {"name": "Marco Pivetta", "email": "ocramius@gmail.com"}
     ],
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "doctrine/deprecations": "^0.5.3 || ^1"
     },
     "require-dev": {
         "doctrine/coding-standard": "^10",

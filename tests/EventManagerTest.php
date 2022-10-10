@@ -7,13 +7,16 @@ namespace Doctrine\Tests\Common;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
-use function count;
+use function array_keys;
 
 class EventManagerTest extends TestCase
 {
+    use VerifyDeprecations;
+
     /* Some pseudo events */
     private const PRE_FOO  = 'preFoo';
     private const POST_FOO = 'postFoo';
@@ -32,7 +35,7 @@ class EventManagerTest extends TestCase
 
     public function testInitialState(): void
     {
-        self::assertEquals([], $this->eventManager->getListeners());
+        self::assertEquals([], $this->eventManager->getAllListeners());
         self::assertFalse($this->eventManager->hasListeners(self::PRE_FOO));
         self::assertFalse($this->eventManager->hasListeners(self::POST_FOO));
     }
@@ -42,9 +45,18 @@ class EventManagerTest extends TestCase
         $this->eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         self::assertTrue($this->eventManager->hasListeners(self::PRE_FOO));
         self::assertTrue($this->eventManager->hasListeners(self::POST_FOO));
-        self::assertEquals(1, count($this->eventManager->getListeners(self::PRE_FOO)));
-        self::assertEquals(1, count($this->eventManager->getListeners(self::POST_FOO)));
-        self::assertEquals(2, count($this->eventManager->getListeners()));
+        self::assertCount(1, $this->eventManager->getListeners(self::PRE_FOO));
+        self::assertCount(1, $this->eventManager->getListeners(self::POST_FOO));
+        self::assertCount(2, $this->eventManager->getAllListeners());
+        self::assertSame(['preFoo', 'postFoo'], array_keys($this->eventManager->getAllListeners()));
+    }
+
+    public function testGetListenersDeprecation(): void
+    {
+        $this->eventManager->addEventListener(['preFoo', 'postFoo'], $this);
+
+        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/event-manager/pull/50');
+        self::assertCount(2, $this->eventManager->getListeners());
     }
 
     public function testDispatchEvent(): void

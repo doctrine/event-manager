@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Common;
 
+use Doctrine\Deprecations\Deprecation;
+
 use function spl_object_hash;
 
 /**
@@ -17,7 +19,7 @@ class EventManager
      * Map of registered listeners.
      * <event> => <listeners>
      *
-     * @var object[][]
+     * @var array<string, object[]>
      */
     private array $listeners = [];
 
@@ -43,16 +45,37 @@ class EventManager
     }
 
     /**
-     * Gets the listeners of a specific event or all listeners.
+     * Gets the listeners of a specific event.
      *
      * @param string|null $event The name of the event.
      *
-     * @return object[]|object[][] The event listeners for the specified event, or all event listeners.
-     * @psalm-return ($event is null ? object[][] : object[])
+     * @return object[]|array<string, object[]> The event listeners for the specified event, or all event listeners.
+     * @psalm-return ($event is null ? array<string, object[]> : object[])
      */
     public function getListeners(string|null $event = null): array
     {
-        return $event ? $this->listeners[$event] : $this->listeners;
+        if ($event === null) {
+            Deprecation::trigger(
+                'doctrine/event-manager',
+                'https://github.com/doctrine/event-manager/pull/50',
+                'Calling %s without an event name is deprecated. Call getAllListeners() instead.',
+                __METHOD__
+            );
+
+            return $this->getAllListeners();
+        }
+
+        return $this->listeners[$event];
+    }
+
+    /**
+     * Gets all listeners keyed by event name.
+     *
+     * @return array<string, object[]> The event listeners for the specified event, or all event listeners.
+     */
+    public function getAllListeners(): array
+    {
+        return $this->listeners;
     }
 
     /**
