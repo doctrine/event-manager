@@ -7,7 +7,6 @@ namespace Doctrine\Tests\Common;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Deprecations\PHPUnit\VerifyDeprecations;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -15,8 +14,6 @@ use function array_keys;
 
 class EventManagerTest extends TestCase
 {
-    use VerifyDeprecations;
-
     /* Some pseudo events */
     private const PRE_FOO  = 'preFoo';
     private const POST_FOO = 'postFoo';
@@ -49,14 +46,6 @@ class EventManagerTest extends TestCase
         self::assertCount(1, $this->eventManager->getListeners(self::POST_FOO));
         self::assertCount(2, $this->eventManager->getAllListeners());
         self::assertSame(['preFoo', 'postFoo'], array_keys($this->eventManager->getAllListeners()));
-    }
-
-    public function testGetListenersDeprecation(): void
-    {
-        $this->eventManager->addEventListener(['preFoo', 'postFoo'], $this);
-
-        $this->expectDeprecationWithIdentifier('https://github.com/doctrine/event-manager/pull/50');
-        self::assertCount(2, $this->eventManager->getListeners());
     }
 
     public function testDispatchEvent(): void

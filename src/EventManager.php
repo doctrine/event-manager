@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Doctrine\Common;
 
-use Doctrine\Deprecations\Deprecation;
-
 use function spl_object_hash;
 
 /**
@@ -47,24 +45,12 @@ class EventManager
     /**
      * Gets the listeners of a specific event.
      *
-     * @param string|null $event The name of the event.
+     * @param string $event The name of the event.
      *
-     * @return object[]|array<string, object[]> The event listeners for the specified event, or all event listeners.
-     * @psalm-return ($event is null ? array<string, object[]> : object[])
+     * @return object[]
      */
-    public function getListeners(string|null $event = null): array
+    public function getListeners(string $event): array
     {
-        if ($event === null) {
-            Deprecation::trigger(
-                'doctrine/event-manager',
-                'https://github.com/doctrine/event-manager/pull/50',
-                'Calling %s without an event name is deprecated. Call getAllListeners() instead.',
-                __METHOD__
-            );
-
-            return $this->getAllListeners();
-        }
-
         return $this->listeners[$event];
     }
 
