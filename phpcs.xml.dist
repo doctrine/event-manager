@@ -17,6 +17,12 @@
 
     <rule ref="Doctrine" />
 
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
+        <!-- This interface is commonly implemented by userland code.
+             We omit the return type to ease the migration to 2.0 -->
+        <exclude-pattern>src/EventSubscriber.php</exclude-pattern>
+    </rule>
+
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
@@ -27,10 +33,5 @@
 
     <rule ref="Squiz.Commenting.FunctionComment.WrongStyle">
         <exclude-pattern>tests/EventManagerTest.php</exclude-pattern>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.Commenting.RequireOneLineDocComment.MultiLineDocComment">
-        <!-- Remove when dropping PHPUnit 7 -->
-        <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 </ruleset>
