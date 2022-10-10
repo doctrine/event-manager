@@ -17,5 +17,5 @@ interface EventSubscriber
      *
      * @return string[]
      */
-    public function getSubscribedEvents(): array;
+    public function getSubscribedEvents();
 }
