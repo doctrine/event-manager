@@ -2,6 +2,8 @@
 
 namespace Doctrine\Common;
 
+use Doctrine\Deprecations\Deprecation;
+
 use function spl_object_hash;
 
 /**
@@ -15,9 +17,9 @@ class EventManager
      * Map of registered listeners.
      * <event> => <listeners>
      *
-     * @var object[][]
+     * @var array<string, object[]>
      */
-    private $_listeners = [];
+    private $listeners = [];
 
     /**
      * Dispatches an event to all registered listeners.
@@ -31,28 +33,49 @@ class EventManager
      */
     public function dispatchEvent($eventName, ?EventArgs $eventArgs = null)
     {
-        if (! isset($this->_listeners[$eventName])) {
+        if (! isset($this->listeners[$eventName])) {
             return;
         }
 
         $eventArgs = $eventArgs ?? EventArgs::getEmptyInstance();
 
-        foreach ($this->_listeners[$eventName] as $listener) {
+        foreach ($this->listeners[$eventName] as $listener) {
             $listener->$eventName($eventArgs);
         }
     }
 
     /**
-     * Gets the listeners of a specific event or all listeners.
+     * Gets the listeners of a specific event.
      *
      * @param string|null $event The name of the event.
      *
-     * @return object[]|object[][] The event listeners for the specified event, or all event listeners.
-     * @psalm-return ($event is null ? object[][] : object[])
+     * @return object[]|array<string, object[]> The event listeners for the specified event, or all event listeners.
+     * @psalm-return ($event is null ? array<string, object[]> : object[])
      */
     public function getListeners($event = null)
     {
-        return $event ? $this->_listeners[$event] : $this->_listeners;
+        if ($event === null) {
+            Deprecation::trigger(
+                'doctrine/event-manager',
+                'https://github.com/doctrine/event-manager/pull/50',
+                'Calling %s without an event name is deprecated. Call getAllListeners() instead.',
+                __METHOD__
+            );
+
+            return $this->getAllListeners();
+        }
+
+        return $this->listeners[$event];
+    }
+
+    /**
+     * Gets all listeners keyed by event name.
+     *
+     * @return array<string, object[]> The event listeners for the specified event, or all event listeners.
+     */
+    public function getAllListeners(): array
+    {
+        return $this->listeners;
     }
 
     /**
@@ -64,7 +87,7 @@ class EventManager
      */
     public function hasListeners($event)
     {
-        return ! empty($this->_listeners[$event]);
+        return ! empty($this->listeners[$event]);
     }
 
     /**
@@ -83,7 +106,7 @@ class EventManager
         foreach ((array) $events as $event) {
             // Overrides listener if a previous one was associated already
             // Prevents duplicate listeners on same event (same instance only)
-            $this->_listeners[$event][$hash] = $listener;
+            $this->listeners[$event][$hash] = $listener;
         }
     }
 
@@ -101,7 +124,7 @@ class EventManager
         $hash = spl_object_hash($listener);
 
         foreach ((array) $events as $event) {
-            unset($this->_listeners[$event][$hash]);
+            unset($this->listeners[$event][$hash]);
         }
     }
 
