@@ -15,26 +15,7 @@
     <file>src</file>
     <file>tests</file>
 
-    <rule ref="Doctrine">
-        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint"/>
-        <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException"/>
-
-        <!-- Adding type hints breaks backward compatibility -->
-        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
-
-        <!-- The null coalesce equal operator is only available in PHP 7.4+ -->
-        <exclude name="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
-    </rule>
-
-    <!-- Property type hints are only available in PHP 7.4+ -->
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-        <properties>
-            <property name="enableNativeTypeHint" value="false"/>
-        </properties>
-    </rule>
+    <rule ref="Doctrine" />
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>tests/*</exclude-pattern>
