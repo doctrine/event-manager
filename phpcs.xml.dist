@@ -10,6 +10,8 @@
     <!-- Ignore warnings, show progress of the run and show sniff names -->
     <arg value="nps"/>
 
+    <config name="php_version" value="70100"/>
+
     <file>src</file>
     <file>tests</file>
 
@@ -44,5 +46,10 @@
 
     <rule ref="Squiz.Commenting.FunctionComment.WrongStyle">
         <exclude-pattern>tests/EventManagerTest.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Commenting.RequireOneLineDocComment.MultiLineDocComment">
+        <!-- Remove when dropping PHPUnit 7 -->
+        <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
 </ruleset>

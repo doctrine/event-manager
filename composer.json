@@ -23,10 +23,10 @@
         "php": "^7.1 || ^8.0"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^9",
-        "phpstan/phpstan": "~1.4.10 || ^1.5.4",
+        "doctrine/coding-standard": "^9 || ^10",
+        "phpstan/phpstan": "~1.4.10 || ^1.8.8",
         "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
-        "vimeo/psalm": "^4.22"
+        "vimeo/psalm": "^4.24"
     },
     "conflict": {
         "doctrine/common": "<2.9"
