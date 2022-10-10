@@ -4,13 +4,11 @@ on:
   pull_request:
     branches:
       - "*.x"
-      - "master"
   push:
     branches:
       - "*.x"
-      - "master"
 
 jobs:
   static-analysis-phpstan:
     name: "Static Analysis with PHPStan"
-    uses: "doctrine/.github/.github/workflows/static-analysis.yml@1.4.1"
+    uses: "doctrine/.github/.github/workflows/static-analysis.yml@2.1.0"
