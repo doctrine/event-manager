@@ -65,7 +65,7 @@ class EventManager
             return $this->getAllListeners();
         }
 
-        return $this->listeners[$event];
+        return $this->listeners[$event] ?? [];
     }
 
     /**

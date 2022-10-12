@@ -106,6 +106,11 @@ class EventManagerTest extends TestCase
         self::assertNull($reflection->getValue(null));
     }
 
+    public function testEmptyListenersListForUnregisteredEvent(): void
+    {
+        self::assertSame([], $this->_eventManager->getListeners('unknown'));
+    }
+
     /* Listener methods */
 
     public function preFoo(EventArgs $e): void
