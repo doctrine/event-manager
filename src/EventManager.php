@@ -51,7 +51,7 @@ class EventManager
      */
     public function getListeners(string $event): array
     {
-        return $this->listeners[$event];
+        return $this->listeners[$event] ?? [];
     }
 
     /**
