@@ -43,7 +43,7 @@
     "require-dev": {
         "doctrine/coding-standard": "^12",
         "phpstan/phpstan": "^1.8.8",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.5",
         "vimeo/psalm": "^5.24"
     },
     "conflict": {

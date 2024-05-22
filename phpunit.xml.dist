@@ -3,8 +3,8 @@
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          colors="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
          bootstrap="./vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
 >
     <testsuites>
         <testsuite name="Doctrine Event Manager Test Suite">
@@ -12,9 +12,9 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <source>
+        <include>
             <directory>src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </source>
 </phpunit>
