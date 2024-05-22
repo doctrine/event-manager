@@ -44,7 +44,7 @@
         "doctrine/coding-standard": "^10",
         "phpstan/phpstan": "^1.8.8",
         "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^4.28"
+        "vimeo/psalm": "^5.24"
     },
     "conflict": {
         "doctrine/common": "<2.9"
