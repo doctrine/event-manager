@@ -4,3 +4,6 @@
 /phpcs.xml
 /.phpcs-cache
 /.phpunit.cache
+
+# phpDocumentor/guides output directory
+/output

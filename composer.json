@@ -42,6 +42,7 @@
     },
     "require-dev": {
         "doctrine/coding-standard": "^12",
+        "phpdocumentor/guides-cli": "^1.4",
         "phpstan/phpstan": "^1.8.8",
         "phpunit/phpunit": "^10.5",
         "vimeo/psalm": "^5.24"

@@ -1,3 +1,5 @@
+:orphan:
+
 .. toctree::
     :depth: 3
 
