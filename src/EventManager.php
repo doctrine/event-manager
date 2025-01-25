@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Doctrine\Common;
 
-use function spl_object_hash;
+use function spl_object_id;
 
 /**
  * The EventManager is the central point of Doctrine's event listener system.
@@ -81,12 +81,12 @@ class EventManager
     public function addEventListener(string|array $events, object $listener): void
     {
         // Picks the hash code related to that listener
-        $hash = spl_object_hash($listener);
+        $oid = spl_object_id($listener);
 
         foreach ((array) $events as $event) {
             // Overrides listener if a previous one was associated already
             // Prevents duplicate listeners on same event (same instance only)
-            $this->listeners[$event][$hash] = $listener;
+            $this->listeners[$event][$oid] = $listener;
         }
     }
 
@@ -98,10 +98,10 @@ class EventManager
     public function removeEventListener(string|array $events, object $listener): void
     {
         // Picks the hash code related to that listener
-        $hash = spl_object_hash($listener);
+        $oid = spl_object_id($listener);
 
         foreach ((array) $events as $event) {
-            unset($this->listeners[$event][$hash]);
+            unset($this->listeners[$event][$oid]);
         }
     }
 
