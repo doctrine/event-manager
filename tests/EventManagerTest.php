@@ -19,8 +19,9 @@ class EventManagerTest extends TestCase
     private const POST_FOO = 'postFoo';
     private const PRE_BAR  = 'preBar';
 
-    private bool $preFooInvoked  = false;
-    private bool $postFooInvoked = false;
+    private bool $preFooInvoked       = false;
+    private bool $postFooInvoked      = false;
+    private bool $customMethodInvoked = false;
     private EventManager $eventManager;
 
     protected function setUp(): void
@@ -48,11 +49,31 @@ class EventManagerTest extends TestCase
         self::assertSame(['preFoo', 'postFoo'], array_keys($this->eventManager->getAllListeners()));
     }
 
+    public function testAddEventListenerWithConfig(): void
+    {
+        $this->eventManager->addEventListener(['preFoo', 'postFoo'], $this, ['preFoo' => ['method' => 'customMethod']]);
+        self::assertTrue($this->eventManager->hasListeners(self::PRE_FOO));
+        self::assertTrue($this->eventManager->hasListeners(self::POST_FOO));
+        self::assertCount(1, $this->eventManager->getListeners(self::PRE_FOO));
+        self::assertCount(1, $this->eventManager->getListeners(self::POST_FOO));
+        self::assertCount(2, $this->eventManager->getAllListeners());
+        self::assertSame(['preFoo', 'postFoo'], array_keys($this->eventManager->getAllListeners()));
+    }
+
     public function testDispatchEvent(): void
     {
         $this->eventManager->addEventListener(['preFoo', 'postFoo'], $this);
         $this->eventManager->dispatchEvent(self::PRE_FOO);
         self::assertTrue($this->preFooInvoked);
+        self::assertFalse($this->postFooInvoked);
+    }
+
+    public function testDispatchEventWithConfig(): void
+    {
+        $this->eventManager->addEventListener(['preFoo', 'postFoo'], $this, ['preFoo' => ['method' => 'customMethod']]);
+        $this->eventManager->dispatchEvent(self::PRE_FOO);
+        self::assertTrue($this->customMethodInvoked);
+        self::assertFalse($this->preFooInvoked);
         self::assertFalse($this->postFooInvoked);
     }
 
@@ -106,6 +127,11 @@ class EventManagerTest extends TestCase
     public function postFoo(EventArgs $e): void
     {
         $this->postFooInvoked = true;
+    }
+
+    public function customMethod(EventArgs $e): void
+    {
+        $this->customMethodInvoked = true;
     }
 }
 
