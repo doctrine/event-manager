@@ -44,7 +44,7 @@
         "doctrine/coding-standard": "^14",
         "phpdocumentor/guides-cli": "^1.4",
         "phpstan/phpstan": "^1.8.8",
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^10.5.58"
     },
     "conflict": {
         "doctrine/common": "<2.9"
