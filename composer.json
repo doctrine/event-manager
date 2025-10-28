@@ -64,5 +64,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "sort-packages": true
+    },
+    "scripts": {
+        "docs": "composer --working-dir docs update && ./docs/vendor/bin/build-docs.sh @additional_args"
     }
 }
