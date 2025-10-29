@@ -44,7 +44,7 @@
         "doctrine/coding-standard": "^14",
         "phpdocumentor/guides-cli": "^1.4",
         "phpstan/phpstan": "^1.8.8",
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^10.5.58"
     },
     "conflict": {
         "doctrine/common": "<2.9"
@@ -64,5 +64,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
         "sort-packages": true
+    },
+    "scripts": {
+        "docs": "composer --working-dir docs update && ./docs/vendor/bin/build-docs.sh @additional_args"
     }
 }
