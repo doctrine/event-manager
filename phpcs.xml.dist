@@ -10,18 +10,12 @@
     <!-- Ignore warnings, show progress of the run and show sniff names -->
     <arg value="nps"/>
 
-    <config name="php_version" value="80100"/>
+    <config name="php_version" value="80400"/>
 
     <file>src</file>
     <file>tests</file>
 
     <rule ref="Doctrine" />
-
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
-        <!-- This interface is commonly implemented by userland code.
-             We omit the return type to ease the migration to 2.0 -->
-        <exclude-pattern>src/EventSubscriber.php</exclude-pattern>
-    </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>tests/*</exclude-pattern>

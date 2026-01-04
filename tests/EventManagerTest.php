@@ -15,9 +15,9 @@ use function array_keys;
 class EventManagerTest extends TestCase
 {
     /* Some pseudo events */
-    private const PRE_FOO  = 'preFoo';
-    private const POST_FOO = 'postFoo';
-    private const PRE_BAR  = 'preBar';
+    private const string PRE_FOO  = 'preFoo';
+    private const string POST_FOO = 'postFoo';
+    private const string PRE_BAR  = 'preBar';
 
     private bool $preFooInvoked  = false;
     private bool $postFooInvoked = false;
