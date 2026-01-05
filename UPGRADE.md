@@ -1,3 +1,10 @@
+# Upgrade to 3.0
+
+## Type declarations
+
+Type declarations have been added wherever possible. The codebase is now fully
+typed.
+
 # Upgrade to 2.0
 
 ## Made the `$event` parameter of `EventManager::getListeners()` mandatory
