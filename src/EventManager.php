@@ -57,7 +57,7 @@ class EventManager
     /**
      * Gets all listeners keyed by event name.
      *
-     * @return array<string, object[]> The event listeners for the specified event, or all event listeners.
+     * @return array<string, object[]>
      */
     public function getAllListeners(): array
     {
