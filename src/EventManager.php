@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Doctrine\Common;
 
-use function spl_object_hash;
+use function spl_object_id;
 
 /**
  * The EventManager is the central point of Doctrine's event listener system.
  * Listeners are registered on the manager and events are dispatched through the
  * manager.
  */
-class EventManager
+class EventManager implements
+    EventListenerIntrospector,
+    EventListenerRegistry,
+    EventSubscriberRegistry
 {
     /**
      * Map of registered listeners.
@@ -21,14 +24,7 @@ class EventManager
      */
     private array $listeners = [];
 
-    /**
-     * Dispatches an event to all registered listeners.
-     *
-     * @param string         $eventName The name of the event to dispatch. The name of the event is
-     *                                  the name of the method that is invoked on listeners.
-     * @param EventArgs|null $eventArgs The event arguments to pass to the event handlers/listeners.
-     *                                  If not supplied, the single empty EventArgs instance is used.
-     */
+    /** {@inheritDoc} */
     public function dispatchEvent(string $eventName, EventArgs|null $eventArgs = null): void
     {
         if (! isset($this->listeners[$eventName])) {
@@ -42,86 +38,55 @@ class EventManager
         }
     }
 
-    /**
-     * Gets the listeners of a specific event.
-     *
-     * @param string $event The name of the event.
-     *
-     * @return object[]
-     */
+    /** {@inheritDoc} */
     public function getListeners(string $event): array
     {
         return $this->listeners[$event] ?? [];
     }
 
-    /**
-     * Gets all listeners keyed by event name.
-     *
-     * @return array<string, object[]> The event listeners for the specified event, or all event listeners.
-     */
+    /** {@inheritDoc} */
     public function getAllListeners(): array
     {
         return $this->listeners;
     }
 
-    /**
-     * Checks whether an event has any registered listeners.
-     */
+    /** {@inheritDoc} */
     public function hasListeners(string $event): bool
     {
         return ! empty($this->listeners[$event]);
     }
 
-    /**
-     * Adds an event listener that listens on the specified events.
-     *
-     * @param string|string[] $events   The event(s) to listen on.
-     * @param object          $listener The listener object.
-     */
+    /** {@inheritDoc} */
     public function addEventListener(string|array $events, object $listener): void
     {
         // Picks the hash code related to that listener
-        $hash = spl_object_hash($listener);
+        $oid = spl_object_id($listener);
 
         foreach ((array) $events as $event) {
             // Overrides listener if a previous one was associated already
             // Prevents duplicate listeners on same event (same instance only)
-            $this->listeners[$event][$hash] = $listener;
+            $this->listeners[$event][$oid] = $listener;
         }
     }
 
-    /**
-     * Removes an event listener from the specified events.
-     *
-     * @param string|string[] $events
-     */
+    /** {@inheritDoc} */
     public function removeEventListener(string|array $events, object $listener): void
     {
         // Picks the hash code related to that listener
-        $hash = spl_object_hash($listener);
+        $oid = spl_object_id($listener);
 
         foreach ((array) $events as $event) {
-            unset($this->listeners[$event][$hash]);
+            unset($this->listeners[$event][$oid]);
         }
     }
 
-    /**
-     * Adds an EventSubscriber.
-     *
-     * The subscriber is asked for all the events it is interested in and added
-     * as a listener for these events.
-     */
+    /** {@inheritDoc} */
     public function addEventSubscriber(EventSubscriber $subscriber): void
     {
         $this->addEventListener($subscriber->getSubscribedEvents(), $subscriber);
     }
 
-    /**
-     * Removes an EventSubscriber.
-     *
-     * The subscriber is asked for all the events it is interested in and removed
-     * as a listener for these events.
-     */
+    /** {@inheritDoc} */
     public function removeEventSubscriber(EventSubscriber $subscriber): void
     {
         $this->removeEventListener($subscriber->getSubscribedEvents(), $subscriber);
