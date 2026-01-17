@@ -8,11 +8,7 @@
             "name": "2.0",
             "branchName": "2.0.x",
             "slug": "latest",
-            "current": true,
-            "aliases": [
-                "current",
-                "stable"
-            ]
+            "current": true
         },
         {
             "name": "1.2",
