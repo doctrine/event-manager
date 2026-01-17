@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Common;
 
+use function func_get_arg;
+use function func_num_args;
 use function spl_object_hash;
 
 /**
@@ -22,6 +24,14 @@ class EventManager
     private array $listeners = [];
 
     /**
+     * Map of registered listener configurations.
+     * <hash><event> => <configuration>
+     *
+     * @var array<string, array<string, array{method?: string}>>
+     */
+    private array $listenerConfigs = [];
+
+    /**
      * Dispatches an event to all registered listeners.
      *
      * @param string         $eventName The name of the event to dispatch. The name of the event is
@@ -37,8 +47,10 @@ class EventManager
 
         $eventArgs ??= EventArgs::getEmptyInstance();
 
-        foreach ($this->listeners[$eventName] as $listener) {
-            $listener->$eventName($eventArgs);
+        foreach ($this->listeners[$eventName] as $hash => $listener) {
+            $method = $this->listenerConfigs[$hash][$eventName]['method'] ?? $eventName;
+
+            $listener->$method($eventArgs);
         }
     }
 
@@ -75,18 +87,23 @@ class EventManager
     /**
      * Adds an event listener that listens on the specified events.
      *
-     * @param string|string[] $events   The event(s) to listen on.
-     * @param object          $listener The listener object.
+     * @param string|string[]                       $events         The event(s) to listen on.
+     * @param object                                $listener       The listener object.
+     * @param array<string, array{method?: string}> $listenerConfig The listener configuration, indexed by event.
      */
-    public function addEventListener(string|array $events, object $listener): void
+    public function addEventListener(string|array $events, object $listener, /* array $listenerConfig = [] */): void
     {
+        /** @var array<string, array{method?: string}> $listenerConfig */
+        $listenerConfig = 3 <= func_num_args() ? func_get_arg(2) : [];
+
         // Picks the hash code related to that listener
         $hash = spl_object_hash($listener);
 
         foreach ((array) $events as $event) {
             // Overrides listener if a previous one was associated already
             // Prevents duplicate listeners on same event (same instance only)
-            $this->listeners[$event][$hash] = $listener;
+            $this->listeners[$event][$hash]       = $listener;
+            $this->listenerConfigs[$hash][$event] = $listenerConfig[$event] ?? [];
         }
     }
 
@@ -100,6 +117,7 @@ class EventManager
         // Picks the hash code related to that listener
         $hash = spl_object_hash($listener);
 
+        unset($this->listenerConfigs[$hash]);
         foreach ((array) $events as $event) {
             unset($this->listeners[$event][$hash]);
         }
