@@ -5,6 +5,11 @@
          beStrictAboutOutputDuringTests="true"
          bootstrap="./vendor/autoload.php"
          cacheDirectory=".phpunit.cache"
+         failOnWarning="true"
+         failOnNotice="true"
+         failOnDeprecation="true"
+         failOnPhpunitNotice="true"
+         failOnPhpunitDeprecation="true"
 >
     <testsuites>
         <testsuite name="Doctrine Event Manager Test Suite">
