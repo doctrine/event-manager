@@ -17,6 +17,10 @@
 
     <rule ref="Doctrine" />
 
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix">
+        <exclude-pattern>src/EventManagerInterface.php</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint">
         <!-- This interface is commonly implemented by userland code.
              We omit the return type to ease the migration to 2.0 -->
