@@ -17,6 +17,10 @@
 
     <rule ref="Doctrine" />
 
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix">
+        <exclude-pattern>src/EventManagerInterface.php</exclude-pattern>
+    </rule>
+
     <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
