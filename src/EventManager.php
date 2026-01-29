@@ -11,10 +11,7 @@ use function spl_object_id;
  * Listeners are registered on the manager and events are dispatched through the
  * manager.
  */
-class EventManager implements
-    EventListenerIntrospector,
-    EventListenerRegistry,
-    EventSubscriberRegistry
+class EventManager implements EventManagerInterface
 {
     /**
      * Map of registered listeners.
