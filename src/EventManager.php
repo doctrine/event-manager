@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\Common;
 
+use Override;
+
 use function spl_object_id;
 
 /**
@@ -21,7 +23,7 @@ class EventManager implements EventManagerInterface
      */
     private array $listeners = [];
 
-    /** {@inheritDoc} */
+    #[Override]
     public function dispatchEvent(string $eventName, EventArgs|null $eventArgs = null): void
     {
         if (! isset($this->listeners[$eventName])) {
@@ -35,25 +37,25 @@ class EventManager implements EventManagerInterface
         }
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function getListeners(string $event): array
     {
         return $this->listeners[$event] ?? [];
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function getAllListeners(): array
     {
         return $this->listeners;
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function hasListeners(string $event): bool
     {
         return ! empty($this->listeners[$event]);
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function addEventListener(string|array $events, object $listener): void
     {
         // Picks the hash code related to that listener
@@ -66,7 +68,7 @@ class EventManager implements EventManagerInterface
         }
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function removeEventListener(string|array $events, object $listener): void
     {
         // Picks the hash code related to that listener
@@ -77,13 +79,13 @@ class EventManager implements EventManagerInterface
         }
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function addEventSubscriber(EventSubscriber $subscriber): void
     {
         $this->addEventListener($subscriber->getSubscribedEvents(), $subscriber);
     }
 
-    /** {@inheritDoc} */
+    #[Override]
     public function removeEventSubscriber(EventSubscriber $subscriber): void
     {
         $this->removeEventListener($subscriber->getSubscribedEvents(), $subscriber);

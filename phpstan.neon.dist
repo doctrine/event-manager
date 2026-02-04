@@ -3,3 +3,4 @@ parameters:
   paths:
     - src/
     - tests/
+  checkMissingOverrideMethodAttribute: true

@@ -7,6 +7,7 @@ namespace Doctrine\Tests\Common;
 use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\EventSubscriber;
+use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -23,6 +24,7 @@ class EventManagerTest extends TestCase
     private bool $postFooInvoked = false;
     private EventManager $eventManager;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->eventManager   = new EventManager();
@@ -112,6 +114,7 @@ class EventManagerTest extends TestCase
 class TestEventSubscriber implements EventSubscriber
 {
     /** @return string[] */
+    #[Override]
     public function getSubscribedEvents(): array
     {
         return ['preFoo', 'postFoo'];
