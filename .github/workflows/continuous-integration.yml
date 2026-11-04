@@ -4,13 +4,21 @@ on:
   pull_request:
     branches:
       - "*.x"
-  push:
-    branches:
-      - "*.x"
 
 jobs:
+  target-branch-check:
+    name: "Target branch check"
+    uses: "paulinevos/.github/.github/workflows/check-target-branch.yml@check-target-branch"
+    permissions:
+      contents: "read"
+      issues: "write"
+      pull-requests: "write"
+    with:
+      fail-on-mismatch: true
+
   phpunit:
     name: "PHPUnit"
+    needs: "target-branch-check"
     uses: "doctrine/.github/.github/workflows/continuous-integration.yml@15.1.0"
     with:
       php-versions: '["8.1", "8.2", "8.3", "8.4", "8.5"]'
